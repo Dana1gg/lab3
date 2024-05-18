@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Scale and Histogram</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+ var correctCaptcha = function(response) {
+ document.getElementsByName('resp')[0].value = response;
+ document.forms[0].submit();
+ };
+ </script>
+
+</head>
+<body>
+    <h1><p style="text-align: center;">Image Rotation and Histogram</p></h1>
+    <fieldset>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <br>
+        Введите масштаб:
+        <input type="number" name="scale" min="0" max="5" step="0.5"required>
+        <br>
+        <div class="g-recaptcha"   id="rcaptcha"  data-sitekey="{{site_key}}" data-callback="correctCaptcha"></div>
+        <br>
+        <label for="bins">Количество интервалов:</label>
+        <input type="number" name="bins" id="bins" min="2" max="255" value="256" required>
+
+        <input type="submit" value="Начать">
+    </fieldset>
+    <table>
+      <tr>
+        <td>
+          {% if original_image %}
+            <h2>Original Image</h2>
+            <img src="{{ url_for('static', filename=original_image) }}" alt="Original Image" style="border: 5px solid black;">
+          {% endif %}
+        </td>
+        <td>
+          {% if rotated_image %}
+            <h2>Rotated Image</h2>
+            <img src="{{ url_for('static', filename=rotated_image) }}" alt="Rotation Image" style="border: 5px solid black;">
+          {% endif %}
+        </td>
+        <td>
+          {% if histograms %}
+            <h2>Histograms</h2>
+            <img src="{{ url_for('static', filename=histograms) }}" alt="Histograms" style="border: 5px solid black;">
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+</body>
+</html>
